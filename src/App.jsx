@@ -1,9 +1,26 @@
-import React from 'react'
-
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchNewGames,
+  fetchPopularGames,
+  fetchUpcomingGames,
+} from "./redux/gameSlice/gameSlice";
 const App = () => {
-  return (
-    <div>App</div>
-  )
-}
+  const state = useSelector((state) => state.Games);
 
-export default App
+
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchPopularGames());
+    dispatch(fetchUpcomingGames());
+    dispatch(fetchNewGames());
+  }, []);
+
+
+
+
+  return <div>App</div>;
+};
+
+export default App;
