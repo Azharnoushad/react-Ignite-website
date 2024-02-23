@@ -1,6 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { newGamesUrl, popularGamesUrl, upcomingGamesUrl } from "../../api";
+import {
+  newGamesUrl,
+  popularGamesUrl,
+  upcomingGamesUrl,
+} from "../../api";
 
 const initialState = {
   popularGames: [],
@@ -46,6 +50,7 @@ export const fetchNewGames = createAsyncThunk(
   }
 );
 
+
 const gameSlice = createSlice({
   name: "Games",
   initialState,
@@ -70,7 +75,8 @@ const gameSlice = createSlice({
       .addCase(fetchNewGames.fulfilled, (state, action) => {
         state.loading = false;
         state.newGames = action.payload;
-      });
+      })
+    
   },
 });
 
