@@ -7,7 +7,7 @@ import {
 } from "../redux/gameSlice/gameSlice";
 import Game from "../components/Game";
 import styled from "styled-components";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import GameDetails from "../components/GameDetails";
 import { useLocation } from "react-router-dom";
 
@@ -15,7 +15,7 @@ const Home = () => {
   const location = useLocation();
 
   const pathId = location.pathname.split("/")[2];
-  const { popularGames, upcomingGames, newGames } = useSelector(
+  const { popularGames, upcomingGames, newGames, search } = useSelector(
     (state) => state.Games
   );
   const dispatch = useDispatch();
@@ -27,46 +27,66 @@ const Home = () => {
 
   return (
     <GameList>
-      {pathId && <GameDetails />}
+      <LayoutGroup>
+        <AnimatePresence>
+          {pathId && <GameDetails pathId={pathId} />}
+        </AnimatePresence>
 
-      <h2>Upcomig Games</h2>
-      <Games>
-        {upcomingGames.map((game) => (
-          <Game
-            name={game.name}
-            released={game.released}
-            id={game.id}
-            image={game.background_image}
-            key={game.id}
-          />
-        ))}
-      </Games>
+        {search.length > 0 ? (
+          <Games>
+            {search.map((game) => (
+              <Game
+                name={game.name}
+                released={game.released}
+                id={game.id}
+                image={game.background_image}
+                key={game.id}
+              />
+            ))}
+          </Games>
+        ) : (
+          <>
+            <h2>Upcomig Games</h2>
+            <Games>
+              {upcomingGames.map((game) => (
+                <Game
+                  name={game.name}
+                  released={game.released}
+                  id={game.id}
+                  image={game.background_image}
+                  key={game.id}
+                />
+              ))}
+            </Games>
 
-      <h2>Popular Games</h2>
-      <Games>
-        {popularGames.map((game) => (
-          <Game
-            name={game.name}
-            released={game.released}
-            id={game.id}
-            image={game.background_image}
-            key={game.id}
-          />
-        ))}
-      </Games>
+            <h2>Popular Games</h2>
+            <Games>
+              {popularGames.map((game) => (
+                <Game
+                  name={game.name}
+                  released={game.released}
+                  id={game.id}
+                  image={game.background_image}
+                  key={game.id}
+                />
+              ))}
+            </Games>
 
-      <h2>New Games</h2>
-      <Games>
-        {newGames.map((game) => (
-          <Game
-            name={game.name}
-            released={game.released}
-            id={game.id}
-            image={game.background_image}
-            key={game.id}
-          />
-        ))}
-      </Games>
+            <h2>New Games</h2>
+            <Games>
+              {newGames.map((game) => (
+                <Game
+                  name={game.name}
+                  released={game.released}
+                  id={game.id}
+                  image={game.background_image}
+                  key={game.id}
+                />
+              ))}
+            </Games>
+          </>
+        )}
+      </LayoutGroup>
     </GameList>
   );
 };

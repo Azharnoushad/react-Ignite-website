@@ -7,8 +7,10 @@ import {
   fetchGameScreenshots,
 } from "../redux/gameDetailsSlice/gameDetailsSlice";
 import { Link } from "react-router-dom";
+import { smallImage } from "../util";
 
 const Game = ({ name, released, image, id }) => {
+  const stringPathId = id.toString();
   const dispatch = useDispatch();
   const gameDetailHandler = () => {
     dispatch(fetchGameDetails(id));
@@ -16,11 +18,15 @@ const Game = ({ name, released, image, id }) => {
     document.body.style.overflow = "hidden";
   };
   return (
-    <StyledGame onClick={gameDetailHandler}>
+    <StyledGame layoutId={stringPathId} onClick={gameDetailHandler}>
       <Link to={`/game/${id}`}>
-        <h3>{name}</h3>
+        <motion.h3 layoutId={`title ${stringPathId}`}>{name}</motion.h3>
         <p>{released}</p>
-        <img src={image} alt={name} />
+        <motion.img
+          src={smallImage(image, 640)}
+          alt={name}
+          layoutId={`image${stringPathId}`}
+        />
       </Link>
     </StyledGame>
   );

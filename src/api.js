@@ -56,12 +56,18 @@ const newGames = `games?key=${
 export const newGamesUrl = () => `${base_url}${newGames}`;
 
 // Game details--------------------------------
-export const gameDetailsURL = (game_id) =>`${base_url}games/${game_id}?key=${import.meta.env.VITE_GAME_API_KEY}` ;
+export const gameDetailsURL = (game_id) =>
+  `${base_url}games/${game_id}?key=${import.meta.env.VITE_GAME_API_KEY}`;
 
 // Game Screenshots--------------------------------
-export const gameScreenshotURL = (game_id) =>`${base_url}games/${game_id}/screenshots?key=${import.meta.env.VITE_GAME_API_KEY}` ;
+export const gameScreenshotURL = (game_id) =>
+  `${base_url}games/${game_id}/screenshots?key=${
+    import.meta.env.VITE_GAME_API_KEY
+  }`;
 
-
-
-
+// Game Search--------------------------------
+export const gameSearchURL = (game_name) =>
+  `${base_url}games?key=${
+    import.meta.env.VITE_GAME_API_KEY
+  }&search=${game_name}&page_size=10`;
 

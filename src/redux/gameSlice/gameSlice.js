@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import {
+  gameSearchURL,
   newGamesUrl,
   popularGamesUrl,
   upcomingGamesUrl,
@@ -10,6 +11,7 @@ const initialState = {
   popularGames: [],
   newGames: [],
   upcomingGames: [],
+  search: [],
   loading: false,
   error: null,
 };
@@ -50,11 +52,26 @@ export const fetchNewGames = createAsyncThunk(
   }
 );
 
+export const fetchSearchGames = createAsyncThunk(
+  "Games/fetchSearchGames",
+  async (gameName, thunkAPI) => {
+    try {
+      const response = await axios.get(gameSearchURL(gameName));
+      return response.data.results;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 
 const gameSlice = createSlice({
   name: "Games",
   initialState,
-  reducers: {},
+  reducers: {
+    clearGameSearch(state, action) {
+      state.search = [];
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchPopularGames.pending, (state, action) => {
@@ -76,8 +93,11 @@ const gameSlice = createSlice({
         state.loading = false;
         state.newGames = action.payload;
       })
-    
+      .addCase(fetchSearchGames.fulfilled, (state, action) => {
+        state.search = action.payload;
+      });
   },
 });
 
 export default gameSlice.reducer;
+export const { clearGameSearch } = gameSlice.actions;
