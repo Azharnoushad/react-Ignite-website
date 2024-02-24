@@ -29,7 +29,7 @@ h2{
 h3{
     font-size:1.3rem;
     color:#333;
-    padding:1.3rem
+    padding:1.3rem 0rem
 }
 P{
     font-size:1.2rem;
@@ -40,6 +40,9 @@ a{
     text-decoration: none;
     color:#333;
     
+}
+img{
+    display:block
 }
 `;
 

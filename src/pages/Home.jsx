@@ -8,9 +8,13 @@ import {
 import Game from "../components/Game";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { popularGamesUrl } from "../api";
+import GameDetails from "../components/GameDetails";
+import { useLocation } from "react-router-dom";
 
 const Home = () => {
+  const location = useLocation();
+
+  const pathId = location.pathname.split("/")[2];
   const { popularGames, upcomingGames, newGames } = useSelector(
     (state) => state.Games
   );
@@ -23,8 +27,10 @@ const Home = () => {
 
   return (
     <GameList>
+      {pathId && <GameDetails />}
+
       <h2>Upcomig Games</h2>
-      <Games >
+      <Games>
         {upcomingGames.map((game) => (
           <Game
             name={game.name}
@@ -44,7 +50,7 @@ const Home = () => {
             released={game.released}
             id={game.id}
             image={game.background_image}
-            key={game.id} 
+            key={game.id}
           />
         ))}
       </Games>

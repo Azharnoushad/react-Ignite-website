@@ -5,6 +5,7 @@ import axios from "axios";
 const initialState = {
   gameDetails: {},
   screenshots: {},
+  isLoading: false,
 };
 
 export const fetchGameDetails = createAsyncThunk(
@@ -37,10 +38,18 @@ const gameDetailsSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
+      .addCase(fetchGameDetails.pending, (state, action) => {
+        state.isLoading = true;
+      })
       .addCase(fetchGameDetails.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.gameDetails = action.payload;
       })
+      .addCase(fetchGameScreenshots.pending, (state, action) => {
+        state.isLoading = true;
+      })
       .addCase(fetchGameScreenshots.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.screenshots = action.payload;
       });
   },
